@@ -11,11 +11,12 @@ import (
 
 var re=regexp.MustCompile(`<script>window.__INITIAL_STATE__=(.+);\(function`)
 
-func ParseUserInfo(contents []byte) engine.ParseResult{
+func ParseUserInfo(contents []byte,name string) engine.ParseResult{
 	match := re.FindSubmatch(contents)
 	if len(match)>=2{
 		json:=match[1]
 		profile:= parseJson(json)
+		profile.Name=name
 		fmt.Printf("json: %s\n",profile)
 	}
 	return engine.ParseResult{}
